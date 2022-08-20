@@ -1,2 +1,2 @@
 # todo
-ToDo CLI application built with python
+ToDo CLI application built with python with saving to database
