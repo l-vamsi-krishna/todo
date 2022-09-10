@@ -16,12 +16,12 @@ class Todo(db.Model):
         return f'{self.msg}'
 
 
-print(Todo.query.all())
+messages = Todo.query.all()
 
 
 @app.route("/")
 def home():
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', data=messages)
 
 
 @app.route("/about")
