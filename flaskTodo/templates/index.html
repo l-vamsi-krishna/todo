@@ -1,4 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ data }}</h1>
+{% for msg in data %}
+<h1>{{ msg.msg }}</h1>
+{% endfor %}
 {% endblock %}
