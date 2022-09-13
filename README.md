@@ -16,6 +16,8 @@ Run below command to start flask web server.
 ```
 python flaskTodo/app.py
 ```
+# Contributions
+I would be very happy for any contribution.
 
 # Next Steps
 1. Currently Flask GUI just retrieves the data, need to provide option to update/delete the data.
