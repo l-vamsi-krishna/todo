@@ -11,7 +11,7 @@ def add_item():
     Take user input and insert into DB
     '''
     new_todo = input('Type your todo text: ')
-    database.insert_item(msg=new_todo)
+    database.insert_todo(msg=new_todo)
     print('Your input is saved!!')
 
 
@@ -34,25 +34,25 @@ def view_list():
     '''
     Display todo items
     '''
-    if database.retrieve_item() == []:
+    if database.retrive_todo() == []:
         print('Your TODO list is empty, start by adding some.')
     else:
-        for id, value in database.retrieve_item():
-            print(f'{id}. {value}')
+        for todo in database.retrive_todo():
+            print(f'{todo.id}. {todo.msg}')
 
 
 def update_delete_item(choice: int):
     '''
     Update or Delete todo item
     '''
-    if database.retrieve_item() == []:
+    if database.retrive_todo() == []:
         print('Your TODO list is empty, start by adding some.')
     else:
         valid_input = False
         ids = []
 
-        for id, value in database.retrieve_item():
-            ids.append(id)
+        for todo in database.retrive_todo():
+            ids.append(todo.id)
 
         while not valid_input:
             view_list()
@@ -63,9 +63,9 @@ def update_delete_item(choice: int):
                 valid_input = True
                 if choice == 3:
                     msg = input('Enter the text to be updated: ')
-                    database.update_item(id=todo_id, msg=msg)
+                    database.update_todo(id=todo_id, msg=msg)
                 else:
-                    database.delete_item(id=todo_id)
+                    database.delete_todo(id=todo_id)
 
         print('Your list is updated')
         view_list()
@@ -90,8 +90,8 @@ def main():
             valid_input = False
             print('Invalid Choice.')
         else:
-            if not database.table_exists():
-                database.create_table()
+            # if not database.table_exists():
+            #     database.create_table()
             if choice == 1:
                 add_item()
             elif choice == 2:

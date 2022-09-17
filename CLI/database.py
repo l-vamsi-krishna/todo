@@ -1,90 +1,87 @@
 '''
 Python file to handle database operations
 '''
-import sqlite3
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+
+Base = declarative_base()
+engine = create_engine('sqlite:///todo.db', echo=False)
 
 
-def create_table():
-    '''
-    CREATE A TABLE IF DOES NOT EXISTS
-    '''
-    if not table_exists():
-        conn = sqlite3.connect('todo.db')
-        cur = conn.cursor()
-        with conn:
-            cur.execute('''CREATE TABLE IF NOT EXISTS TODO(
-            ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            MSG TEXT
-            )
-            ''')
-        conn.close()
+class Todo(Base):
+    __tablename__ = 'todo'
+    id = Column('id', Integer, primary_key=True)
+    msg = Column('msg', String)
 
 
-def table_exists():
-    '''
-    Check if table exists
-    '''
-    conn = sqlite3.connect('todo.db')
-    cur = conn.cursor()
-    listOfTables = cur.execute(
-        """
-    SELECT name FROM sqlite_master WHERE type='table' AND name='TODO';
-    """
-    ).fetchall()
-    if listOfTables == []:
-        conn.close()
-        return False
-    else:
-        conn.close()
-        return True
+Base.metadata.create_all(bind=engine)
+Session = sessionmaker(bind=engine)
 
 
-def insert_item(msg: str):
+def insert_todo(msg: str):
     '''
-    Insert todo item to table
+    Insert new todo item.
     '''
-    conn = sqlite3.connect('todo.db')
-    cur = conn.cursor()
-    if not table_exists():
-        create_table()
-    else:
-        with conn:
-            cur.execute('INSERT INTO TODO VALUES (NULL,:msg)', {'msg': msg})
-    conn.close()
+    session = Session()
+    todo = Todo()
+    todo.msg = msg
+    try:
+        session.add(todo)
+        session.commit()
+    except:
+        session.rollback()
+    finally:
+        session.close()
 
 
-def retrieve_item(id: int = None):
+def retrive_todo():
     '''
-    Fetch all rows from todo table.
+    get all todo items from db
     '''
-    conn = sqlite3.connect('todo.db')
-    cur = conn.cursor()
-    cur.execute('SELECT id,msg FROM TODO')
-    list_of_todos = cur.fetchall()
-    conn.close()
-    return list_of_todos
+    session = Session()
+    msgs = []
+    try:
+        list_of_todos = session.query(Todo).all()
+        for todo in list_of_todos:
+            msgs.append(todo.msg)
+        # print(list_of_todos[0].id)
+        return list_of_todos
+    except:
+        session.rollback()
+    finally:
+        session.close()
 
 
-def update_item(id: int, msg: str):
+def update_todo(id: int, msg: str):
     '''
-    Update todo based on id
+    Update todo text for the given id
     '''
-    conn = sqlite3.connect('todo.db')
-    cur = conn.cursor()
-    with conn:
-        cur.execute('UPDATE TODO SET msg = :msg WHERE ID = :id',
-                    {'msg': msg, 'id': id})
-    cur = conn.cursor()
-    conn.close()
+    session = Session()
+    try:
+        update_todo = session.query(Todo).filter(Todo.id == id)
+        # update first value in the list, since id is unique, we get 1 value
+        update_todo[0].msg = msg
+        session.commit()
+    except:
+        session.rollback()
+    finally:
+        session.close()
 
 
-def delete_item(id: int):
+def delete_todo(id: int):
     '''
-    Delete todo from table
+    Delete todo from db for the given id.
     '''
-    conn = sqlite3.connect('todo.db')
-    cur = conn.cursor()
-    with conn:
-        cur.execute('DELETE FROM TODO WHERE ID = :id', {'id': id})
-    cur = conn.cursor()
-    conn.close()
+    session = Session()
+    try:
+        session.query(Todo).filter(Todo.id == id).delete()
+        session.commit()
+    except:
+        session.rollback()
+    finally:
+        session.close()
+
+
+if __name__ == '__main__':
+    print(retrive_todo())
