@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<table class="table">
+<table class="table" style="width: 50ex">
     <thead>
         <tr>
-            <th scope="col">Todo Message</th>
+            <th scope="col">Messages</th>
         </tr>
     </thead>
     <tbody>
         {% for msg in data %}
         <tr>
-            <td>{{ msg }}</td>
+            <td>{{ msg.msg }}</td>
         </tr>
         {% endfor %}
     </tbody>

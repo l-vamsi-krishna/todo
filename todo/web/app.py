@@ -4,14 +4,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 list_of_todos = database.retrive_todo()
 
-messages = []
-for todo in list_of_todos:
-    messages.append(todo.msg)
-
 
 @app.route("/")
 def home():
-    return render_template('index.html', title='Home', data=messages)
+    return render_template('index.html', title='Home', data=list_of_todos)
 
 
 @app.route("/about")

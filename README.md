@@ -11,13 +11,16 @@ Run below command inside venv, to interact within CLI.
 ```
 python todo/cli/todo.py
 ```
+![CLI](/assets/cli.jpg)
 
 Flask GUI connects to the same database to perform db tasks.  
 Run below command to start flask web server.
 ```
 python -m todo.web.app
 ```
-The above command, considers top level directory in sys.path, hence relative imports work
+The above command, considers top level directory in sys.path, hence relative imports work.  
+
+![Home Page](/assets/home.jpg)
 
 # Contributions
 I would be very happy for any contribution.
