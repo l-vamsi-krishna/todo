@@ -17,6 +17,8 @@ Run below command to start flask web server.
 ```
 python -m todo.web.app
 ```
+The above command, considers top level directory in sys.path, hence relative imports work
+
 # Contributions
 I would be very happy for any contribution.
 
