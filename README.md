@@ -3,18 +3,19 @@
 [![Python application](https://github.com/l-vamsi-krishna/todo/actions/workflows/python-app.yml/badge.svg)](https://github.com/l-vamsi-krishna/todo/actions/workflows/python-app.yml)![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django)
 
 A Simple Todo application, which persists/updates/deletes to database.  
+It is updated to use sql alchemy to perform db operations, instead of sqlite connectors & cursors.  
 It uses autopep8 to implement pep 8 coding standards.  
 
 It can be used on CLI.  
 Run below command inside venv, to interact within CLI.
 ```
-python CLI/todo.py
+python todo/cli/todo.py
 ```
 
 Flask GUI connects to the same database to perform db tasks.  
 Run below command to start flask web server.
 ```
-python flaskTodo/app.py
+python -m todo.web.app
 ```
 # Contributions
 I would be very happy for any contribution.

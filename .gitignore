@@ -1,3 +1,5 @@
 /venv
 todo.db
-CLI/__pycache__
+cli/__pycache__
+todo/__pycache__
+web/__pycache__

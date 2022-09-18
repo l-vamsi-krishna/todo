@@ -37,15 +37,12 @@ def insert_todo(msg: str):
 
 def retrive_todo():
     '''
-    get all todo items from db
+    get all todo objects from db
     '''
     session = Session()
     msgs = []
     try:
         list_of_todos = session.query(Todo).all()
-        for todo in list_of_todos:
-            msgs.append(todo.msg)
-        # print(list_of_todos[0].id)
         return list_of_todos
     except:
         session.rollback()
@@ -84,4 +81,4 @@ def delete_todo(id: int):
 
 
 if __name__ == '__main__':
-    print(retrive_todo())
+    print(retrive_todo()[0].msg)
