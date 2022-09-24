@@ -10,7 +10,7 @@ def add_item():
     '''
     Take user input and insert into DB
     '''
-    new_todo = input('Type your todo text: ')
+    new_todo = input('Enter your task: ')
     database.insert_todo(msg=new_todo)
     print('Your input is saved!!')
 
@@ -35,7 +35,7 @@ def view_list():
     Display todo items
     '''
     if database.retrive_todo() == []:
-        print('Your TODO list is empty, start by adding some.')
+        print('Your ToDo list is empty, start by adding some.')
     else:
         for todo in database.retrive_todo():
             print(f'{todo.id}. {todo.msg}')
@@ -46,7 +46,7 @@ def update_delete_item(choice: int):
     Update or Delete todo item
     '''
     if database.retrive_todo() == []:
-        print('Your TODO list is empty, start by adding some.')
+        print('Your ToDo list is empty, start by adding some.')
     else:
         valid_input = False
         ids = []
@@ -56,7 +56,7 @@ def update_delete_item(choice: int):
 
         while not valid_input:
             view_list()
-            todo_id = user_int_input(prompt='Enter the todo number: ')
+            todo_id = user_int_input(prompt='Enter the task number: ')
             if todo_id not in ids:
                 print('Invalid input!!')
             else:
@@ -75,14 +75,14 @@ def main():
     '''
     Initial function to be executed!
     '''
-    print('Welcome to TODO application!!\n')
+    print('Welcome to My Todo application!!\n')
     valid_input = False
     while not valid_input:
-        print('''\tOperations avialable in TODO
-        1. Add item TODO.
-        2. View your TODO.
-        3. Update your TODO.
-        4. Delete you TODO.
+        print('''\tOperations avialable:
+        1. Add task.
+        2. View your tasks.
+        3. Update your task.
+        4. Delete you task.
         5. Exit.
         ''')
         choice = user_int_input(prompt='Enter your choice: ')
@@ -90,8 +90,6 @@ def main():
             valid_input = False
             print('Invalid Choice.')
         else:
-            # if not database.table_exists():
-            #     database.create_table()
             if choice == 1:
                 add_item()
             elif choice == 2:

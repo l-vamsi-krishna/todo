@@ -6,6 +6,7 @@ list_of_todos = database.retrive_todo()
 
 
 @app.route("/")
+@app.route('/home')
 def home():
     return render_template('index.html', title='Home', data=list_of_todos)
 
