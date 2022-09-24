@@ -29,7 +29,7 @@ def insert_todo(msg: str):
     try:
         session.add(todo)
         session.commit()
-    except:
+    except Exception:
         session.rollback()
     finally:
         session.close()
@@ -40,11 +40,10 @@ def retrive_todo():
     get all todo objects from db
     '''
     session = Session()
-    msgs = []
     try:
         list_of_todos = session.query(Todo).all()
         return list_of_todos
-    except:
+    except Exception:
         session.rollback()
     finally:
         session.close()
@@ -60,7 +59,7 @@ def update_todo(id: int, msg: str):
         # update first value in the list, since id is unique, we get 1 value
         update_todo[0].msg = msg
         session.commit()
-    except:
+    except Exception:
         session.rollback()
     finally:
         session.close()
@@ -74,7 +73,7 @@ def delete_todo(id: int):
     try:
         session.query(Todo).filter(Todo.id == id).delete()
         session.commit()
-    except:
+    except Exception:
         session.rollback()
     finally:
         session.close()
